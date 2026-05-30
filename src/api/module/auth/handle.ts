@@ -207,7 +207,7 @@ export async function getMe(email: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.email, email)
   })
-  if (!user) return status(404, 'User not found!')
+  if (!user) return null
   const { password: _password, id: _id, ...userWithoutPassword } = user
   return userWithoutPassword
 }

@@ -12,14 +12,27 @@ export default Router({
 })
   .get('/me', async ({ user, set }) => {
     if (user && user.email) {
-      return await getMe(user.email)
+      const userData = await getMe(user.email)
+      if (userData) {
+        return userData
+      }
+      set.status = 404
+      return 'User not found!'
     }
     set.status = 401
     return 'Please login before access!'
   }, {
     response: {
-      200: t.Object({}, { description: 'User profile' }),
+      200: t.Object({
+        status: t.UnionEnum(['active', 'inactive', 'suspended', 'deleted', 'register'], { description: 'User status' }),
+        email: t.String({ description: 'User email' }),
+        name: t.Nullable(t.String({ description: 'User name' })),
+        role: t.UnionEnum(['user', 'admin', 'super-admin', 'USER', 'ADMIN', 'SUPER_ADMIN'], { description: 'User role' }),
+        createdAt: t.Date({ description: 'User creation date' }),
+        updatedAt: t.Date({ description: 'User update date' }),
+      }, { description: 'User profile' }),
       401: t.String({ description: 'Please login before access!' }),
+      404: t.String({ description: 'User not found!' })
     }
   })
   .post(
