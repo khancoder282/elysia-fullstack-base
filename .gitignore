@@ -8,6 +8,8 @@ lerna-debug.log*
 
 # database
 *.sqlite
+*.sqlite3
+*.db
 
 # package-json
 package-json.lock
@@ -79,7 +81,8 @@ typings/
 
 # dotenv environment variables file
 .env
-.env.test
+.env.*
+!.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -111,3 +114,70 @@ dist
 
 # TernJS port file
 .tern-port
+
+# -----------------------------------------------------------------------
+# Build output
+# -----------------------------------------------------------------------
+build/
+out/
+
+# -----------------------------------------------------------------------
+# Bun
+# -----------------------------------------------------------------------
+.bun/
+bun.lockb
+
+# -----------------------------------------------------------------------
+# Drizzle
+# -----------------------------------------------------------------------
+# Keep migration SQL files but ignore the meta snapshots (auto-generated)
+drizzle/*
+
+# -----------------------------------------------------------------------
+# macOS
+# -----------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# -----------------------------------------------------------------------
+# Windows
+# -----------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# -----------------------------------------------------------------------
+# Linux
+# -----------------------------------------------------------------------
+*~
+
+# -----------------------------------------------------------------------
+# Editors & IDEs
+# -----------------------------------------------------------------------
+# VSCode (keep shared settings, ignore personal/generated ones)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+
+# Vim / Neovim
+*.swp
+*.swo
+Session.vim
+
+# -----------------------------------------------------------------------
+# Temporary / misc
+# -----------------------------------------------------------------------
+tmp/
+temp/
+*.local
