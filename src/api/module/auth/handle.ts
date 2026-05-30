@@ -202,3 +202,12 @@ export async function ResetPassword(token: string, newPassword: string) {
 
   return { message: 'Password reset successfully! You can now log in with your new password.' };
 }
+
+export async function getMe(email: string) {
+  const user = await db.query.users.findFirst({
+    where: eq(users.email, email)
+  })
+  if (!user) return status(404, 'User not found!')
+  const { password: _password, id: _id, ...userWithoutPassword } = user
+  return userWithoutPassword
+}

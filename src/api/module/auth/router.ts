@@ -3,16 +3,20 @@ import { t } from 'elysia';
 import { Router } from '../../base/router';
 import { app_name } from '../../../../package.json';
 import { getAccessTokenMaxAge, getRefreshTokenMaxAge } from '../../base/jwt';
-import { Login, Register, VerifyEmail, ResetPassword, ForgotPassword, resendVerifyEmail } from './handle';
+import { Login, getMe, Register, VerifyEmail, ResetPassword, ForgotPassword, resendVerifyEmail } from './handle';
 
 export default Router({
   detail: {
     tags: ['Auth'],
   },
 })
-  .get('/me', ({ user }) => ({
-    user
-  }))
+  .get('/me', async ({ user, set }) => {
+    if (user && user.email) {
+      return await getMe(user.email)
+    }
+    set.status = 401
+    return 'Please login before access!'
+  })
   .post(
     '/login',
     async ({ body, cookie }) => {
