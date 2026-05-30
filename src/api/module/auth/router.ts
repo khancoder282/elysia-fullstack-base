@@ -16,6 +16,11 @@ export default Router({
     }
     set.status = 401
     return 'Please login before access!'
+  }, {
+    response: {
+      200: t.Object({}, { description: 'User profile' }),
+      401: t.String({ description: 'Please login before access!' }),
+    }
   })
   .post(
     '/login',
@@ -148,4 +153,18 @@ export default Router({
         404: t.String({ description: 'User not found' }),
       },
     },
-  );
+  )
+  .get('/logout', async ({ cookie, set }) => {
+    cookie.refreshToken.remove()
+    cookie.accessToken.remove()
+    set.status = 200
+    return 'Logout successfully!'
+  }, {
+    response: {
+      200: t.String({ description: 'Logout successfully!' }),
+    },
+    cookie: t.Cookie({
+      refreshToken: t.Optional(t.String()),
+      accessToken: t.Optional(t.String()),
+    })
+  })
